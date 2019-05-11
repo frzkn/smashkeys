@@ -1,9 +1,15 @@
 import React from 'react'
-const TextBox = ({ state: { seconds } }, { resetGame, startGame }) => {
+const TextBox = props => {
   return (
-    <div className="flex shadow-md justify-center items-center mt-8">
-      <input className="w-full text-2xl p-4" type="text" placeholder="Start smashing!" onChange={()=> startGame()}/>
-      <div className="h-full text-xl text-white font-bold p-3 m-2 rounded-full border-1 border-blue-light bg-purple-dark"> {seconds}</div>
+    <div className="flex-auto flex items-center justify-center">
+      <input
+        className="flex-grow w-full text-2xl p-4 border-2"
+        type="text"
+        placeholder="Start smashing!"
+        onChange={props.startGame}
+      />
+      <div className=" shadow-sm text-xl text-white font-bold rounded-full w-10 h-10 m-2 p-2 border-1 border-blue-light bg-purple-dark">{props.state.seconds}</div>
+
     </div>
   )
 }

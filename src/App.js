@@ -1,7 +1,7 @@
 import React from 'react';
 import WordBox from './components/WordBox';
 import TextBox from './components/TextBox';
-import Results from './components/Results';
+// import Results from './components/Results';
 import ResetButton from './components/ResetButton';
 import './App.css';
 import './tailwind.index.css'
@@ -12,36 +12,52 @@ function App() {
     words: words(200),
     wordIndex: 0,
     testComplete: false,
-    seconds: 60
-
+    seconds: 6,
+    input: '',
+    running: false,
+    intervalId: null
   })
+
+
 
   const resetGame = () => {
     setState({
       ...state,
       words: words(200),
-      seconds: 60
+      seconds: 60 
     })
   }
+
+
+
+
   const startGame = () => {
-    setInterval(() => {
+    if (!state.running) {
       setState({
         ...state,
-        seconds: state.seconds--
+        intervalId: setInterval(() => {
+          if (state.seconds <= 0) clearInterval(state.intervalId)
+          else {
+            setState({
+              ...state,
+              seconds: --state.seconds
+            })
+          }
+        }, 1000)
       })
-    }, 1000)
+    } else {
+      console.log("game already running")
+    }
   }
-  const [testComplete, SetTextComplete] = React.useState(false)
-
-
+  
   return (
-    <div className="container flex-col items-center mx-auto bg-grey-lightes mx-auto mt-8">
-      <WordBox state={state} setState={setState} />
-      <div className="flex">
-        <TextBox className="flex-1" state={state} resetGame={resetGame} setState={setState} startGame={startGame} />
-        <ResetButton />
-      </div>
 
+    <div className="container px-32 flex-col mx-auto mt-12">
+      <WordBox state={state} setState={setState} />
+      <div className="flex flex-start mt-8">
+        <TextBox state={state} resetGame={resetGame} startGame={startGame} />
+        <ResetButton resetGame={resetGame}/>
+      </div>
       {/* {testComplete? <Results/> : ''} */}
     </div>
   );
