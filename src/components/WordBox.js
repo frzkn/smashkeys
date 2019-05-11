@@ -1,10 +1,24 @@
 import React from "react"
 
-const WordBox = ({ state }) => {
+const WordBox = props  => {
+
   return (
-    <div className="border-2 h-64 font-mono leading-loose overflow-y-scroll text-3xl font-medium rounded border-grey-darkest p-5 shadow-md">
-      {state.words.map((word, index) => {
-        return <span key={index} className="p-2 bg-blue-dark text-white rounded"> {word} </span>
+    <div className="border-2 flex font-mono overflow-hidden h-32 text-3xl font-medium mt-32 pt-8 rounded border-grey-darkest p-5 shadow-md">
+      {props.state.words.map((word, index) => {
+        if (index === props.wordIndex.i) {
+          return (
+            <span key={index} className="p-2 rounded bg-purple-dark text-white">
+              {" "}
+              {word}{" "}
+            </span>
+          )
+        } else
+          return (
+            <span key={index} className="p-2 rounded">
+              {" "}
+              {word}{" "}
+            </span>
+          )
       })}
     </div>
   )

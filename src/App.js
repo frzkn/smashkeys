@@ -1,41 +1,49 @@
 import React from "react"
+import words from "random-words"
 import WordBox from "./components/WordBox"
 import TextBox from "./components/TextBox"
 import Results from "./components/Results"
 import ResetButton from "./components/ResetButton"
 import "./App.css"
 import "./tailwind.index.css"
-import words from "random-words"
 
 function App() {
   const [state, setState] = React.useState({
     words: words(200),
-    wordIndex: 0,
     seconds: 60,
     running: false,
+    inputText: "",
     intervalId: null
   })
 
-  const [result, setResult] = React.useState(false)
-  const [intervalId, setIntervalId] = React.useState(0)
+  const [wordIndex, setWordIndex] = React.useState({
+    i: 0
+  })
+  const [wpm, setWPM] = React.useState(0)
+  const [disable, setDisable] = React.useState(false)
 
   const resetGame = () => {
-    setResult(false)
-    setState({
-      ...state,
-      words: words(200),
-      seconds: 60
-    })
+    window.location.reload()
+    // setDisable(false)
+    // setState({
+    //   ...state,
+    //   words: words(200),
+    //   seconds: 60,
+    //   running: false,
+    //   intervalId: 0
+    // })
+    // setWPM(0)
   }
 
-  const startGame = () => {
+  const startGame = e => {
     if (!state.running) {
       setState({
         ...state,
+        running: true,
         intervalId: setInterval(() => {
-          if (state.seconds <= 0) {
+          if (state.seconds === 0) {
             clearInterval(state.intervalId)
-            setResult(true)
+            setDisable(true)
           } else {
             setState({
               ...state,
@@ -44,19 +52,30 @@ function App() {
           }
         }, 1000)
       })
-    } else {
-      console.log("game already running")
+    }
+    let inputTextValue = e.target.value
+    if (inputTextValue.split("").pop() === " ") {
+      let enteredWord = inputTextValue.replace(/ /g, "")
+      if (enteredWord === state.words[wordIndex.i]) {
+        setWPM(wpm + 1)
+        state.words.shift()
+        e.target.value = ""
+      }
     }
   }
-
   return (
     <div className="container px-32 flex-col mx-auto mt-12">
-      <WordBox state={state} setState={setState} />
+      <WordBox state={state} wordIndex={wordIndex} setState={setState} />
       <div className="flex flex-start mt-8">
-        <TextBox state={state} resetGame={resetGame} startGame={startGame} />
+        <TextBox
+          state={state}
+          disable={disable}
+          resetGame={resetGame}
+          startGame={startGame}
+        />
         <ResetButton resetGame={resetGame} />
       </div>
-      {result ? <Results /> : <div> Result will show here</div>}
+      {disable ? <Results wpm={wpm} /> : <div />}
     </div>
   )
 }
