@@ -9,7 +9,7 @@ import "./tailwind.index.css"
 
 function App() {
   const [state, setState] = React.useState({
-    words: words(200),
+    words: words({exactly: 200, maxLength: 5}),
     seconds: 60,
     running: false,
     inputText: "",
@@ -19,7 +19,11 @@ function App() {
   const [wordIndex, setWordIndex] = React.useState({
     i: 0
   })
-  const [wpm, setWPM] = React.useState(0)
+  const [wpm, setWPM] = React.useState({
+    grossWPM: 0,
+    typedLetters: 0,
+  })
+
   const [disable, setDisable] = React.useState(false)
 
   const resetGame = () => {
@@ -53,18 +57,21 @@ function App() {
         }, 1000)
       })
     }
-    let inputTextValue = e.target.value
+    let inputTextValue = e.target.value.toLowerCase()
     if (inputTextValue.split("").pop() === " ") {
       let enteredWord = inputTextValue.replace(/ /g, "")
       if (enteredWord === state.words[wordIndex.i]) {
-        setWPM(wpm + 1)
+        setWPM({
+          ...setWPM,
+          typedLetters: wpm.typedLetters + enteredWord.length + 1
+        })
         state.words.shift()
         e.target.value = ""
       }
     }
   }
   return (
-    <div className="container px-32 flex-col mx-auto mt-12">
+    <div className="container sm:px-8 md:px-32 flex-col mx-auto mt-12">
       <WordBox state={state} wordIndex={wordIndex} setState={setState} />
       <div className="flex flex-start mt-8">
         <TextBox
@@ -75,7 +82,7 @@ function App() {
         />
         <ResetButton resetGame={resetGame} />
       </div>
-      {disable ? <Results wpm={wpm} /> : <div />}
+      {disable && <Results wpm={wpm} /> }
     </div>
   )
 }
