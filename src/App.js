@@ -83,7 +83,7 @@ function App() {
     <div className="container flex-col mx-auto mt-12 sm:px-8 md:px-32">
       <WordBox state={state} wordIndex={wordIndex} setState={setState} isWrong={isWrong} />
       <div className="flex mt-8 flex-start">
-        <TextBox state={state} disable={disable} resetGame={resetGame} startGame={startGame} />
+        <TextBox state={state} disable={disable} resetGame={resetGame} startGame={startGame} resetGame={resetGame} />
         <ResetButton resetGame={resetGame} />
       </div>
       {disable && <Results wpm={wpm} />}

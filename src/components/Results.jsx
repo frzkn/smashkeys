@@ -1,11 +1,11 @@
-import React from "react"
-import { MdKeyboard } from "react-icons/md"
-const Results = props => {
+import React from 'react'
+import { MdKeyboard } from 'react-icons/md'
+const Results = (props) => {
   return (
-    <div className="flex mx-auto w-1/5 text-purple-darker  border-b-2 border-purple items-center justify-around">
-      <MdKeyboard className="h-32 w-32 text-purple-dark" />
-      <div className="flex text-3xl font-bold items-end justify-center">
-        <span className="text-5xl">{Math.round(props.wpm.typedLetters/ 5)} </span>WPM
+    <div className="flex items-center justify-around w-1/5 mx-auto text-purple-600 border-b-2 border-purple">
+      <MdKeyboard className="w-32 h-32 text-purple-600 " />
+      <div className="flex items-end justify-center text-3xl font-bold">
+        <span className="text-5xl">{Math.round(props.wpm.typedLetters / 5)} </span>WPM
       </div>
     </div>
   )
