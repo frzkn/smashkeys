@@ -27,19 +27,19 @@ cd smashkeys
 Install dependencies
 
 ```
-npm install
+yarn install
 ```
 
 Start development server
 
 ```
-npm start
+yarn start
 ```
 
 Build static files
 
 ```
-npm run build
+yarn build
 ```
 
 ## Built With
