@@ -37,5 +37,6 @@
     "postcss": "^7.0.30",
     "postcss-cli": "^7.1.1",
     "tailwindcss": "^1.4.6"
-  }
+  },
+  "license": "MIT"
 }
