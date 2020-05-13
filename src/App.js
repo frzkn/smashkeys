@@ -4,6 +4,7 @@ import WordBox from './components/WordBox'
 import TextBox from './components/TextBox'
 import Results from './components/Results'
 import ResetButton from './components/ResetButton'
+import logo from './logo.svg'
 import './App.css'
 import './tailwind.index.css'
 
@@ -79,7 +80,10 @@ function App() {
       }
     }
   }
-  return (
+  return [
+    <nav className="flex w-full text-white ">
+      <img src={logo} alt="" className="flex h-16 mx-auto my-6" />
+    </nav>,
     <div className="container flex-col mx-auto mt-12 sm:px-8 md:px-32">
       <WordBox state={state} wordIndex={wordIndex} setState={setState} isWrong={isWrong} />
       <div className="flex mt-8 flex-start">
@@ -87,8 +91,8 @@ function App() {
         <ResetButton resetGame={resetGame} />
       </div>
       {disable && <Results wpm={wpm} />}
-    </div>
-  )
+    </div>,
+  ]
 }
 
 export default App
